@@ -1,11 +1,14 @@
 {
   "name": "outsera-avaliacao-backend",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "node --test"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -13,5 +16,8 @@
   "type": "commonjs",
   "dependencies": {
     "better-sqlite3": "^9.4.0"
+  },
+  "devDependencies": {
+    "jest": "^30.0.5"
   }
 }
