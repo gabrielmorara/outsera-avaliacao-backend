@@ -7,7 +7,7 @@ beforeAll(async () => {
   servidor = spawn('node', ['index.js'], {
     env: { ...process.env, PORT }
   });
-  await new Promise(resolve => setTimeout(resolve, 1200));
+  await new Promise((resolve) => setTimeout(resolve, 1200));
 });
 
 afterAll(() => {
@@ -15,13 +15,31 @@ afterAll(() => {
 });
 
 describe('Testes de Integração API', () => {
-
-  it('deve retornar intervalos corretamente no endpoint principal', async () => {
+  it('deve retornar o output EXATO para intervalos', async () => {
     const res = await fetch(`http://localhost:${PORT}/producers/intervals`);
+    const outputEsperado = {
+      min: [
+        {
+          producer: 'Joel Silver',
+          interval: 1,
+          previousWin: 1990,
+          followingWin: 1991
+        }
+      ],
+      max: [
+        {
+          producer: 'Matthew Vaughn',
+          interval: 13,
+          previousWin: 2002,
+          followingWin: 2015
+        }
+      ]
+    };
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(Array.isArray(body.min)).toBe(true);
     expect(Array.isArray(body.max)).toBe(true);
+    expect(JSON.stringify(body)).toStrictEqual(JSON.stringify(outputEsperado));
   });
 
   it('deve retornar 405 para métodos não permitidos', async () => {
@@ -34,7 +52,9 @@ describe('Testes de Integração API', () => {
   });
 
   it('deve redirecionar a raiz para a documentação do Swagger', async () => {
-    const res = await fetch(`http://localhost:${PORT}/`, { redirect: 'manual' });
+    const res = await fetch(`http://localhost:${PORT}/`, {
+      redirect: 'manual'
+    });
     expect(res.status).toBe(302);
     const location = res.headers.get('location');
     expect(location === '/docs/swagger' || location === '/swagger').toBe(true);
@@ -66,7 +86,9 @@ describe('Testes de Integração API', () => {
   });
 
   it('deve lidar com erro interno do servidor', async () => {
-    const res = await fetch(`http://localhost:${PORT}/producers/intervals?simulateError=1`);
+    const res = await fetch(
+      `http://localhost:${PORT}/producers/intervals?simulateError=1`
+    );
     if (res.status === 500) {
       const body = await res.json();
       expect(body.error).toBe('Erro Interno do Servidor');
