@@ -1,0 +1,126 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Intervalos dos Produtores",
+    "description": "API para consultar os produtores com maiores e menores intervalos entre vitórias no prêmio de Pior Filme do Golden Raspberry Awards (Razzies).",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Gabriel Morara",
+      "email": "gabriel.morara@gmail.com"
+    }
+  },
+  "paths": {
+    "/producers/intervals": {
+      "get": {
+        "tags": ["Produtores"],
+        "summary": "Listar produtores com intervalos mínimos e máximos entre vitórias",
+        "description": "Retorna duas listas: uma com os produtores com menor intervalo entre vitórias e outra com os produtores com maior intervalo entre vitórias no prêmio de Pior Filme.",
+        "operationId": "getProducerIntervals",
+        "responses": {
+          "200": {
+            "description": "Consulta realizada com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IntervalResponse"
+                },
+                "examples": {
+                  "exemplo": {
+                    "value": {
+                      "min": [
+                        {
+                          "producer": "Produtor X",
+                          "interval": 1,
+                          "previousWin": 2001,
+                          "followingWin": 2002
+                        }
+                      ],
+                      "max": [
+                        {
+                          "producer": "Produtor Y",
+                          "interval": 10,
+                          "previousWin": 1990,
+                          "followingWin": 2000
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string" }
+                  }
+                },
+                "examples": {
+                  "erro": {
+                    "value": {
+                      "error": "Erro Interno do Servidor"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "IntervalResponse": {
+        "type": "object",
+        "properties": {
+          "min": {
+            "type": "array",
+            "description": "Lista dos produtores com menor intervalo entre vitórias.",
+            "items": {
+              "$ref": "#/components/schemas/Interval"
+            }
+          },
+          "max": {
+            "type": "array",
+            "description": "Lista dos produtores com maior intervalo entre vitórias.",
+            "items": {
+              "$ref": "#/components/schemas/Interval"
+            }
+          }
+        }
+      },
+      "Interval": {
+        "type": "object",
+        "properties": {
+          "producer": {
+            "type": "string",
+            "description": "Nome do produtor."
+          },
+          "interval": {
+            "type": "integer",
+            "description": "Número de anos de intervalo entre vitórias."
+          },
+          "previousWin": {
+            "type": "integer",
+            "description": "Ano da vitória anterior."
+          },
+          "followingWin": {
+            "type": "integer",
+            "description": "Ano da vitória seguinte."
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Produtores",
+      "description": "Operações relacionadas aos produtores de filmes."
+    }
+  ]
+}
