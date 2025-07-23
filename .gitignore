@@ -1,5 +1,4 @@
 data.db
 src/cache.db
 node_modules/
-.env
 package-lock.json
