@@ -44,7 +44,7 @@ function startServer(result) {
         return;
       }
 
-      // Serve o swagger.json (documentação OpenAPI)
+      // swagger.json (documentação OpenAPI)
       if (url.pathname === '/docs/swagger.json') {
         try {
           const spec = fs.readFileSync(SWAGGER_JSON);
@@ -57,7 +57,7 @@ function startServer(result) {
         return;
       }
 
-      // Serve a interface do Swagger UI (docs.html customizado)
+      // interface do Swagger UI (docs.html)
       if (url.pathname === '/docs/swagger') {
         try {
           const html = fs.readFileSync(DOCS_HTML);
