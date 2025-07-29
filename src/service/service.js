@@ -12,11 +12,12 @@ const { selectWinners } = require('../data/db');
  * - Retorna uma lista com os intervalos, incluindo o produtor, o intervalo (em anos),
  *   o ano da vitória anterior e o ano da vitória seguinte.
  * 
- * @returns {Array<Object>} Lista de objetos com informações sobre os intervalos de vitórias por produtor.
+ * 
+ * @returns {Promise<Array<Object>>} Lista de objetos com informações sobre os intervalos de vitórias por produtor.
  */
-function computeIntervals() {
+async function computeIntervals() {
+  const registros = await selectWinners();
   const winsMap = new Map();
-  const registros = selectWinners();
   for (const { year, producer } of registros) {
     if (!winsMap.has(producer)) winsMap.set(producer, []);
     winsMap.get(producer).push(year);

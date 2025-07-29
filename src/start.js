@@ -93,7 +93,7 @@ function startServer(result) {
 }
 
 // Função principal de inicialização
-function start() {
+async function start() {
   loadEnv();
 
   const csvFile = process.env.CSV_PATH
@@ -102,8 +102,8 @@ function start() {
 
   let result;
   try {
-    initDatabase(csvFile);
-    const intervals = computeIntervals();
+    await initDatabase(csvFile);
+    const intervals = await computeIntervals();
     result = calculateResult(intervals);
   } catch (err) {
     console.error('Erro ao preparar dados:', err);
@@ -116,5 +116,7 @@ function start() {
 module.exports = { start, computeIntervals, startServer };
 
 if (require.main === module) {
-  start();
+  (async () => {
+    await start();
+  })();
 }

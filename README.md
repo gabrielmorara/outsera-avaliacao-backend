@@ -9,7 +9,7 @@ O objetivo é expor uma API REST que retorna informações sobre os vencedores d
 
 - **JavaScript**
 - **Node.js**
-- **SQLite** (em memória)
+- **SQL.js**
 - **OpenAPI/Swagger** para documentação
 - **Jest** para testes de integração
 
@@ -46,7 +46,7 @@ test/
 ## ⚙️ Como rodar o projeto
 
 ### 1. **Pré-requisitos**
-- Node.js 18 ou superior
+- Node.js 20 ou superior
 - npm
 
 ### 2. **Clonar o projeto**
